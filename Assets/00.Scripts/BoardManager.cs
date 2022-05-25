@@ -26,27 +26,26 @@ public class BoardManager : MonoBehaviour
         int width = 600 / mapSize;
         int height = 600 / mapSize;
 
-        Debug.Log("Cell Width : "  + width);
-        Debug.Log("Cell Height : "  + height);
+        Debug.Log("Cell Width : " + width);
+        Debug.Log("Cell Height : " + height);
 
         for (int y = 0; y < mapSize; y++)
         {
             for (int x = 0; x < mapSize; x++)
             {
-                board[y,x] = Instantiate(cellPrefabs);
-                board[y,x].type = (CELL_TYPE)Random.Range(0, 4);
-                board[y,x].SetCell(cellParent,width,height,x,y);
+                board[y, x] = Instantiate(cellPrefabs);
+                board[y, x].SetCell(cellParent, width, height, x, y);
             }
         }
     }
 
     private void ShowMap()
     {
-        for(int y = 0; y < mapSize; y++)
+        for (int y = 0; y < mapSize; y++)
         {
-            for(int x = 0 ; x< mapSize; x++)
+            for (int x = 0; x < mapSize; x++)
             {
-                board[y,x].RenderCell();
+                board[y, x].RenderCell();
             }
         }
     }

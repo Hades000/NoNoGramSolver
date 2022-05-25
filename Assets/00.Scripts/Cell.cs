@@ -10,10 +10,11 @@ public class Cell : MonoBehaviour
 
     public void SetCell(Transform parent, int width, int height, int x, int y)
     {
+        type = (CELL_TYPE)Random.Range(0, 4);
         transform.SetParent(parent);
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
         transform.localPosition = new Vector2(x * width, -(y * height));
-        
+
         RenderCell();
     }
 
