@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
-    public Image cellPrefabs;
+    public Cell cellPrefabs;
     public Transform cellParent;
 
     public Cell[,] map;
@@ -14,14 +14,16 @@ public class BoardManager : MonoBehaviour
 
     void Start()
     {
+        map = new Cell[mapSize,mapSize];
+
         for(int i = 0; i < mapSize; i++)
         {
             for(int j = 0 ; j< mapSize; j++)
             {
-                map[i,j].type = (CELL_TYPE)Random.Range(0, 6);
-                Image newObj = Instantiate(cellPrefabs);
-                newObj.transform.SetParent(cellParent);
-                newObj.transform.localPosition = new Vector2(j * 70, -(i * 70));
+                map[i,j] = Instantiate(cellPrefabs);
+                map[i,j].type = (CELL_TYPE)Random.Range(0, 4);
+                map[i,j].transform.SetParent(cellParent);
+                map[i,j].transform.localPosition = new Vector2(j * 70, -(i * 70));
             }
         }
 
