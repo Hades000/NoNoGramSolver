@@ -5,45 +5,45 @@ using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
+    public static BoardManager ins;
+
     public Cell cellPrefabs;
     public Transform cellParent;
 
-    public Cell[,] map;
+    public Cell[,] board;
 
     public int mapSize;
 
+    private void Awake()
+    {
+        if (ins == null)
+            ins = this;
+    }
+
     void Start()
     {
-        map = new Cell[mapSize,mapSize];
+        board = new Cell[mapSize, mapSize];
 
-        for(int i = 0; i < mapSize; i++)
+        for (int y = 0; y < mapSize; y++)
         {
-            for(int j = 0 ; j< mapSize; j++)
+            for (int x = 0; x < mapSize; x++)
             {
-                map[i,j] = Instantiate(cellPrefabs);
-                map[i,j].type = (CELL_TYPE)Random.Range(0, 4);
-                map[i,j].transform.SetParent(cellParent);
-                map[i,j].transform.localPosition = new Vector2(j * 70, -(i * 70));
+                board[y,x] = Instantiate(cellPrefabs);
+                board[y,x].type = (CELL_TYPE)Random.Range(0, 4);
+                board[y,x].SetCell(cellParent,x,y);
             }
         }
 
-        ShowMap();
+        // ShowMap();
     }
 
     private void ShowMap()
     {
-        for(int i = 0; i < mapSize; i++)
+        for(int y = 0; y < mapSize; y++)
         {
-            for(int j = 0 ; j< mapSize; j++)
+            for(int x = 0 ; x< mapSize; x++)
             {
-                if(map[i,j].type == CELL_TYPE.EMPTY)
-                    map[i,j].img.color = Color.white;
-                else if(map[i,j].type == CELL_TYPE.O)
-                    map[i,j].img.color = Color.black;
-                else if(map[i,j].type == CELL_TYPE.X)
-                    map[i,j].img.color = Color.red;
-                else if(map[i,j].type == CELL_TYPE.DK)
-                    map[i,j].img.color = Color.grey;
+                board[y,x].SetCell(cellParent,x,y);
             }
         }
     }
