@@ -7,9 +7,9 @@ public class BoardManager : MonoBehaviour
 {
     public static BoardManager ins;
 
-    public Cell cellPrefabs;
     public Transform cellParent;
 
+    public Cell cellPrefabs;
     public Cell[,] board;
 
     public int mapSize;
@@ -23,6 +23,11 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         board = new Cell[mapSize, mapSize];
+        int width = 600 / mapSize;
+        int height = 600 / mapSize;
+
+        Debug.Log("Cell Width : "  + width);
+        Debug.Log("Cell Height : "  + height);
 
         for (int y = 0; y < mapSize; y++)
         {
@@ -30,11 +35,9 @@ public class BoardManager : MonoBehaviour
             {
                 board[y,x] = Instantiate(cellPrefabs);
                 board[y,x].type = (CELL_TYPE)Random.Range(0, 4);
-                board[y,x].SetCell(cellParent,x,y);
+                board[y,x].SetCell(cellParent,width,height,x,y);
             }
         }
-
-        // ShowMap();
     }
 
     private void ShowMap()
@@ -43,7 +46,7 @@ public class BoardManager : MonoBehaviour
         {
             for(int x = 0 ; x< mapSize; x++)
             {
-                board[y,x].SetCell(cellParent,x,y);
+                board[y,x].RenderCell();
             }
         }
     }
