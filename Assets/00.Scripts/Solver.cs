@@ -12,15 +12,15 @@ public class Solver : MonoBehaviour
     }
 
     //  ¹«Á¶°Ç Ä¥ÇØÁö´Â Ä­
-    private void FillAlwaysCell(string hint, CHECK_TYPE type)
+    private void FillAlwaysCell(int idx, string hint, CHECK_TYPE type)
     {
         if (hint.Length == 1)
         {
             int intHint = int.Parse(hint);
 
-            if(intHint == 0)
+            if(intHint == BoardManager.ins.boardSize)
             {
-
+                BoardManager.ins.ChangeBoardData(idx,CELL_TYPE.O,CHECK_TYPE.ROW);
             }
         }
         else

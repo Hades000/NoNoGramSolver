@@ -50,11 +50,21 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void ChangeRow(int row, CELL_TYPE type)
+    public void ChangeBoardData(int idx, CELL_TYPE cellType, CHECK_TYPE checkType)
     {
-        for(int col = 0; col < boardSize; col++)
+        if (checkType == CHECK_TYPE.ROW)
         {
-            board[col,row].type = type;
+            for (int row = 0; row < boardSize; row++)
+            {
+                board[idx, idx].type = cellType;
+            }
+        }
+        else
+        {
+            for (int col = 0; col < boardSize; col++)
+            {
+                board[col, idx].type = cellType;
+            }
         }
     }
 }
