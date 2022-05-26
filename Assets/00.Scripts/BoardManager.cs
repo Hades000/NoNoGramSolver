@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
@@ -12,7 +9,7 @@ public class BoardManager : MonoBehaviour
     public Cell cellPrefabs;
     public Cell[,] board;
 
-    public int mapSize;
+    public int boardSize;
 
     private void Awake()
     {
@@ -22,16 +19,19 @@ public class BoardManager : MonoBehaviour
 
     void Start()
     {
-        board = new Cell[mapSize, mapSize];
-        int width = 600 / mapSize;
-        int height = 600 / mapSize;
+        InitBoard();
+    }
 
-        Debug.Log("Cell Width : " + width);
-        Debug.Log("Cell Height : " + height);
+    private void InitBoard()
+    {
+        board = new Cell[boardSize, boardSize];
 
-        for (int y = 0; y < mapSize; y++)
+        int width = 600 / boardSize;
+        int height = 600 / boardSize;
+
+        for (int y = 0; y < boardSize; y++)
         {
-            for (int x = 0; x < mapSize; x++)
+            for (int x = 0; x < boardSize; x++)
             {
                 board[y, x] = Instantiate(cellPrefabs);
                 board[y, x].SetCell(cellParent, width, height, x, y);
@@ -39,11 +39,11 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    private void ShowMap()
+    public void ShowMap()
     {
-        for (int y = 0; y < mapSize; y++)
+        for (int y = 0; y < boardSize; y++)
         {
-            for (int x = 0; x < mapSize; x++)
+            for (int x = 0; x < boardSize; x++)
             {
                 board[y, x].RenderCell();
             }
