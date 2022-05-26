@@ -49,4 +49,12 @@ public class BoardManager : MonoBehaviour
             }
         }
     }
+
+    public void ChangeRow(int row, CELL_TYPE type)
+    {
+        for(int col = 0; col < boardSize; col++)
+        {
+            board[col,row].type = type;
+        }
+    }
 }
