@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 1148581664}
   - component: {fileID: 1148581663}
   - component: {fileID: 1148581665}
+  - component: {fileID: 1148581666}
   m_Layer: 5
   m_Name: Board
   m_TagString: Untagged
@@ -363,7 +364,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellParent: {fileID: 1722944199}
   cellPrefabs: {fileID: 4506582953447665241, guid: 945166717190f0745b35d8631b9dbf74, type: 3}
-  mapSize: 15
+  boardSize: 10
+--- !u!114 &1148581666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148581661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90fb63744e7e5124f8ce88c220d4cacf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputRowHint:
+  - 10
+  - 0
+  - 10
+  - 0
+  - 10
+  - 0
+  - 10
+  - 0
+  - 10
+  - 0
+  inputColHint:
+  - 0
+  - 10
+  - 0
+  - 10
+  - 0
+  - 10
+  - 0
+  - 10
+  - 0
+  - 10
 --- !u!1 &1651946710
 GameObject:
   m_ObjectHideFlags: 0
