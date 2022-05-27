@@ -5,12 +5,13 @@ public enum CELL_TYPE { EMPTY, O, X, DK }
 
 public class Cell : MonoBehaviour
 {
+    
     public CELL_TYPE type;
     public Image img;
 
     public void SetCell(Transform parent, int width, int height, int x, int y)
     {
-        type = (CELL_TYPE)Random.Range(0, 4);
+        type = CELL_TYPE.EMPTY;
         transform.SetParent(parent);
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
         transform.localPosition = new Vector2(x * width, -(y * height));

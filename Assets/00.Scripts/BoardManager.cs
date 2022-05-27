@@ -19,13 +19,12 @@ public class BoardManager : MonoBehaviour
 
     void Start()
     {
+        board = new Cell[boardSize, boardSize];
         InitBoard();
     }
 
     private void InitBoard()
     {
-        board = new Cell[boardSize, boardSize];
-
         int width = 600 / boardSize;
         int height = 600 / boardSize;
 
@@ -56,7 +55,8 @@ public class BoardManager : MonoBehaviour
         {
             for (int row = 0; row < boardSize; row++)
             {
-                board[idx, idx].type = cellType;
+                board[idx, row].type = cellType;
+                Debug.Log($"[{idx},{row}] Type : {checkType.ToString()}");
             }
         }
         else
@@ -64,6 +64,7 @@ public class BoardManager : MonoBehaviour
             for (int col = 0; col < boardSize; col++)
             {
                 board[col, idx].type = cellType;
+                Debug.Log($"[{col},{idx}] Type : {checkType.ToString()}");
             }
         }
     }

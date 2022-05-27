@@ -11,37 +11,40 @@ public class Solver : MonoBehaviour
 
     void Start()
     {
-
+        StartCoroutine(Solve());
     }
 
     private IEnumerator Solve()
     {
-        while(true)
+        yield return new WaitUntil(() => BoardManager.ins.board != null);
+        while (true)
         {
-            for(int i = 0; i < BoardManager.ins.boardSize; i++)
+            for (int i = 0; i < BoardManager.ins.boardSize; i++)
             {
-                FillAlwaysCell(i,inputRowHint[i],CHECK_TYPE.ROW);
+                FillAlwaysCell(i, inputRowHint, CHECK_TYPE.ROW);
             }
+
+            BoardManager.ins.ShowMap();
 
             yield return new WaitForSecondsRealtime(1f);
         }
     }
 
     //  ¹«Á¶°Ç Ä¥ÇØÁö´Â Ä­
-    private void FillAlwaysCell(int idx, string hint, CHECK_TYPE type)
+    private void FillAlwaysCell(int idx, string[] hint, CHECK_TYPE type)
     {
-        if (hint.Length == 1)
+        if (!hint[idx].Contains(","))
         {
-            int intHint = int.Parse(hint);
+            int intHint = int.Parse(hint[idx]);
 
             if (intHint == BoardManager.ins.boardSize)
             {
-                BoardManager.ins.ChangeBoardData(idx, CELL_TYPE.O, CHECK_TYPE.ROW);
+                BoardManager.ins.ChangeBoardData(idx, CELL_TYPE.O, type);
             }
         }
         else
         {
-            List<int> hints = ChangeStringHint(hint);
+            List<int> hints = ChangeStringHint(hint[idx]);
         }
 
     }
