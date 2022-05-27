@@ -21,6 +21,12 @@ public class Solver : MonoBehaviour
         {
             for (int i = 0; i < BoardManager.ins.boardSize; i++)
             {
+                if(!inputRowHint[i].Contains(","))
+                {
+                    OneHintSolve(i, inputRowHint[i], CHECK_TYPE.ROW);
+                    OneHintSolve(i, inputColHint[i], CHECK_TYPE.COL);
+                }
+
                 BoardManager.ins.CheckBoardState(i, CHECK_TYPE.ROW);
                 BoardManager.ins.CheckBoardState(i, CHECK_TYPE.COL);
             }
@@ -29,6 +35,42 @@ public class Solver : MonoBehaviour
 
             yield return new WaitForSecondsRealtime(1f);
         }
+    }
+
+    private void OneHintSolve(int idx, string hintStr, CHECK_TYPE type)
+    {
+        Debug.Log($"idx : {idx} Hint :{hintStr} Type: {type.ToString()}");
+        int[] sum = new int[BoardManager.ins.boardSize];
+
+        int hint = int.Parse(hintStr);
+        int loopCount = BoardManager.ins.boardSize - hint - 1;
+
+        for(int i = 0 ; i<loopCount; i++)
+        {
+            int[] tmp = MakeTempList(BoardManager.ins.boardSize);
+
+            for(int j = 0; j<hint; j++)
+            {
+                sum[i+j]++;
+            }
+        }
+
+        for(int i = 0; i < sum.Length;i++)
+        {
+            Debug.Log(sum[i]);
+        }
+    }
+
+    private int[] MakeTempList(int len)
+    {
+        int[] temp = new int[len]; 
+
+        for(int i = 0 ; i < len; i++)
+        {
+            temp[i] = 0;
+        }
+
+        return temp;
     }
 
     private List<int> ChangeStringHint(string hint)

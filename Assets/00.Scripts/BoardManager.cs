@@ -99,23 +99,35 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void ChangeBoardData(int idx, CELL_TYPE cellType, CHECK_TYPE checkType)
+    public void ChangeBoardData(int fixedIdx, CELL_TYPE cellType, CHECK_TYPE checkType)
     {
         if (checkType == CHECK_TYPE.ROW)
         {
             for (int row = 0; row < boardSize; row++)
             {
-                board[idx, row].type = cellType;
-                Debug.Log($"[{idx},{row}] Type : {checkType.ToString()}");
+                board[fixedIdx, row].type = cellType;
+                Debug.Log($"[{fixedIdx},{row}] Type : {checkType.ToString()}");
             }
         }
         else
         {
             for (int col = 0; col < boardSize; col++)
             {
-                board[col, idx].type = cellType;
-                Debug.Log($"[{col},{idx}] Type : {checkType.ToString()}");
+                board[col, fixedIdx].type = cellType;
+                Debug.Log($"[{col},{fixedIdx}] Type : {checkType.ToString()}");
             }
+        }
+    }
+
+    public void ChangeBoardData(int fixedIdx, int curIdx, CELL_TYPE cellType, CHECK_TYPE checkType)
+    {
+        if (checkType == CHECK_TYPE.ROW)
+        {
+            board[fixedIdx, curIdx].type = cellType;
+        }
+        else
+        {
+            board[curIdx, fixedIdx].type = cellType;
         }
     }
 
