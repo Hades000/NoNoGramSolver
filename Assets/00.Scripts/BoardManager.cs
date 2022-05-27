@@ -13,6 +13,8 @@ public class BoardManager : MonoBehaviour
 
     public int boardSize;
 
+    public bool isSettingCom = false;
+
     private void Awake()
     {
         if (ins == null)
@@ -22,6 +24,8 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         board = new Cell[boardSize, boardSize];
+        rowCheck = new bool[boardSize];
+        colCheck = new bool[boardSize];
         InitBoard();
     }
 
@@ -38,6 +42,14 @@ public class BoardManager : MonoBehaviour
                 board[y, x].SetCell(cellParent, width, height, x, y);
             }
         }
+
+        for(int i = 0; i < boardSize; i++)
+        {
+            rowCheck[i] = false;
+            colCheck[i] = false;
+        }
+
+        isSettingCom = true;
     }
 
     public void ShowMap()
@@ -51,14 +63,31 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void ChangeComplete(int idx, CHECK_TYPE type)
+    public void CheckBoardState(int idx, CHECK_TYPE type)
     {
         if(type == CHECK_TYPE.ROW)
         {
+            for (int row = 0; row < boardSize; row++)
+            {
+                if(board[idx, row].type == CELL_TYPE.EMPTY)
+                {
+                    rowCheck[idx] = false;
+                    return;
+                }
+            }
+
             rowCheck[idx] = true;
         }
         else
         {
+            for (int col = 0; col < boardSize; col++)
+            {
+                if(board[col, idx].type == CELL_TYPE.EMPTY)
+                {
+                    colCheck[idx] = false;
+                    return;
+                }
+            }
             colCheck[idx] = true;
         }
     }
