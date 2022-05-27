@@ -36,6 +36,9 @@ public class Solver : MonoBehaviour
     //  ¹«Á¶°Ç Ä¥ÇØÁö´Â Ä­
     private void FillAlwaysCell(int idx, string[] hint, CHECK_TYPE type)
     {
+        if(!CanSolve(idx,type))
+            return;
+
         if (!hint[idx].Contains(","))
         {
             int intHint = int.Parse(hint[idx]);
@@ -65,5 +68,10 @@ public class Solver : MonoBehaviour
         }
 
         return tmp;
+    }
+
+    private bool CanSolve(int idx, CHECK_TYPE type)
+    {
+        return (type == CHECK_TYPE.ROW && !BoardManager.ins.rowCheck[idx] || type== CHECK_TYPE.COL && !BoardManager.ins.colCheck[idx]);
     }
 }
