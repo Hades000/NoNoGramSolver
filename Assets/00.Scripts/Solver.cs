@@ -22,6 +22,7 @@ public class Solver : MonoBehaviour
             for (int i = 0; i < BoardManager.ins.boardSize; i++)
             {
                 FillAlwaysCell(i, inputRowHint, CHECK_TYPE.ROW);
+                FillAlwaysCell(i, inputColHint, CHECK_TYPE.COL);
             }
 
             BoardManager.ins.ShowMap();
@@ -40,6 +41,7 @@ public class Solver : MonoBehaviour
             if (intHint == BoardManager.ins.boardSize)
             {
                 BoardManager.ins.ChangeBoardData(idx, CELL_TYPE.O, type);
+                BoardManager.ins.ChangeComplete(idx,type);
             }
         }
         else

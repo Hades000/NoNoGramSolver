@@ -8,6 +8,8 @@ public class BoardManager : MonoBehaviour
 
     public Cell cellPrefabs;
     public Cell[,] board;
+    public bool[] rowCheck;
+    public bool[] colCheck;
 
     public int boardSize;
 
@@ -46,6 +48,18 @@ public class BoardManager : MonoBehaviour
             {
                 board[y, x].RenderCell();
             }
+        }
+    }
+
+    public void ChangeComplete(int idx, CHECK_TYPE type)
+    {
+        if(type == CHECK_TYPE.ROW)
+        {
+            rowCheck[idx] = true;
+        }
+        else
+        {
+            colCheck[idx] = true;
         }
     }
 
