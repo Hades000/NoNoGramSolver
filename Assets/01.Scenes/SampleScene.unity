@@ -364,7 +364,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellParent: {fileID: 1722944199}
   cellPrefabs: {fileID: 4506582953447665241, guid: 945166717190f0745b35d8631b9dbf74, type: 3}
+  rowCheck: 
+  colCheck: 
   boardSize: 10
+  isSettingCom: 0
 --- !u!114 &1148581666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,27 +381,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputRowHint:
+  - 2,2
+  - 2,2
+  - 2,2
+  - 2,2
+  - 8
   - 10
-  - 0
   - 10
-  - 0
-  - 10
-  - 0
-  - 10
-  - 0
-  - 10
-  - 0
+  - 2,4,2
+  - 4,4
+  - 8
   inputColHint:
-  - 0
+  - 4
+  - 6
+  - 7,2
   - 10
-  - 0
+  - 4,1
+  - 4,1
   - 10
-  - 0
-  - 10
-  - 0
-  - 10
-  - 0
-  - 10
+  - 7,2
+  - 6
+  - 4
 --- !u!1 &1651946710
 GameObject:
   m_ObjectHideFlags: 0

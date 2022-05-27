@@ -43,7 +43,7 @@ public class BoardManager : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < boardSize; i++)
+        for (int i = 0; i < boardSize; i++)
         {
             rowCheck[i] = false;
             colCheck[i] = false;
@@ -65,14 +65,14 @@ public class BoardManager : MonoBehaviour
 
     public void CheckBoardState(int idx, CHECK_TYPE type)
     {
-        if(!CanWork(idx,type))
+        if (!CanWork(idx, type))
             return;
 
-        if(type == CHECK_TYPE.ROW)
+        if (type == CHECK_TYPE.ROW)
         {
             for (int row = 0; row < boardSize; row++)
             {
-                if(board[idx, row].type == CELL_TYPE.EMPTY)
+                if (board[idx, row].type == CELL_TYPE.EMPTY)
                 {
                     rowCheck[idx] = false;
                     Debug.Log("Empty Ä­ÀÌ ÀÖÀ½ false");
@@ -87,7 +87,7 @@ public class BoardManager : MonoBehaviour
         {
             for (int col = 0; col < boardSize; col++)
             {
-                if(board[col, idx].type == CELL_TYPE.EMPTY)
+                if (board[col, idx].type == CELL_TYPE.EMPTY)
                 {
                     colCheck[idx] = false;
                     Debug.Log("Empty Ä­ÀÌ ÀÖÀ½ false");
@@ -118,9 +118,9 @@ public class BoardManager : MonoBehaviour
             }
         }
     }
-    
+
     public bool CanWork(int idx, CHECK_TYPE type)
     {
-        return (type == CHECK_TYPE.ROW && !BoardManager.ins.rowCheck[idx] || type== CHECK_TYPE.COL && !BoardManager.ins.colCheck[idx]);
+        return (type == CHECK_TYPE.ROW && !BoardManager.ins.rowCheck[idx] || type == CHECK_TYPE.COL && !BoardManager.ins.colCheck[idx]);
     }
 }
