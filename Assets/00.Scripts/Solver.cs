@@ -55,8 +55,6 @@ public class Solver : MonoBehaviour
 
         for(int i = 0 ; i<loopCount; i++)
         {
-            int[] tmp = MakeTempList(BoardManager.ins.boardSize);
-
             for(int j = 0; j<hint; j++)
             {
                 sum[i+j]++;
@@ -79,13 +77,12 @@ public class Solver : MonoBehaviour
 
         Debug.Log($"Loop Count : {loopCount}");
         
-        int[] sum = MakeTempList(BoardManager.ins.boardSize);
+        int[] sum = new int[BoardManager.ins.boardSize];
 
         for(int i = 0; i < loopCount; i++)
         {
             for(int j = i + firstHint+1;j < BoardManager.ins.boardSize-secHint+1; j++)
             {
-                int[] tmp =MakeTempList(BoardManager.ins.boardSize);
                 sum[i+j]++;
             }
         }
@@ -96,18 +93,6 @@ public class Solver : MonoBehaviour
             Debug.Log(sum[i]);
         }
         Debug.Log("------------------------------------------");
-    }
-
-    private int[] MakeTempList(int len)
-    {
-        int[] temp = new int[len]; 
-
-        for(int i = 0 ; i < len; i++)
-        {
-            temp[i] = 0;
-        }
-
-        return temp;
     }
 
     private List<int> ChangeStringHint(string hint)
