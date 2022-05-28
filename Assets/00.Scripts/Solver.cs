@@ -24,26 +24,18 @@ public class Solver : MonoBehaviour
                 if(!inputRowHint[i].Contains(","))
                 {
                     OneHintSolve(i, inputRowHint[i], CHECK_TYPE.ROW);
-                    // OneHintSolve(i, inputColHint[i], CHECK_TYPE.COL);
                 }
                 else
                 {
                     string[] rowhintArr = inputRowHint[i].Split(',');
-                    string[] colhintArr = inputColHint[i].Split(',');
 
                     if(rowhintArr.Length == 2)
                     {
                         TwoHintSolve(i,rowhintArr, CHECK_TYPE.ROW);
                     }
-
-                    if(colhintArr.Length == 2)
-                    {
-                        TwoHintSolve(i,rowhintArr, CHECK_TYPE.COL);
-                    }
                 }
 
                 BoardManager.ins.CheckBoardState(i, CHECK_TYPE.ROW);
-                BoardManager.ins.CheckBoardState(i, CHECK_TYPE.COL);
             }
 
             BoardManager.ins.ShowMap();
