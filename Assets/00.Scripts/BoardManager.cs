@@ -102,7 +102,6 @@ public class BoardManager : MonoBehaviour
             for (int row = 0; row < boardSize; row++)
             {
                 board[fixedIdx, row].type = cellType;
-                Debug.Log($"[{fixedIdx},{row}] Type : {checkType.ToString()}");
             }
         }
         else
@@ -110,7 +109,6 @@ public class BoardManager : MonoBehaviour
             for (int col = 0; col < boardSize; col++)
             {
                 board[col, fixedIdx].type = cellType;
-                Debug.Log($"[{col},{fixedIdx}] Type : {checkType.ToString()}");
             }
         }
     }

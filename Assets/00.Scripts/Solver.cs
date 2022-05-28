@@ -26,6 +26,15 @@ public class Solver : MonoBehaviour
                     OneHintSolve(i, inputRowHint[i], CHECK_TYPE.ROW);
                     // OneHintSolve(i, inputColHint[i], CHECK_TYPE.COL);
                 }
+                else
+                {
+                    string[] hintArr = inputRowHint[i].Split(',');
+
+                    if(hintArr.Length == 2)
+                    {
+                        TwoHintSolve(i,hintArr, CHECK_TYPE.ROW);
+                    }
+                }
 
                 BoardManager.ins.CheckBoardState(i, CHECK_TYPE.ROW);
                 BoardManager.ins.CheckBoardState(i, CHECK_TYPE.COL);
@@ -39,13 +48,10 @@ public class Solver : MonoBehaviour
 
     private void OneHintSolve(int idx, string hintStr, CHECK_TYPE type)
     {
-        Debug.Log($"idx : {idx} Hint :{hintStr} Type: {type.ToString()}");
         int[] sum = new int[BoardManager.ins.boardSize];
 
         int hint = int.Parse(hintStr);
         int loopCount = BoardManager.ins.boardSize - hint + 1;
-
-        Debug.Log($"Loop Count : {loopCount}");
 
         for(int i = 0 ; i<loopCount; i++)
         {
@@ -62,6 +68,11 @@ public class Solver : MonoBehaviour
             CELL_TYPE changeType = sum[i] == loopCount ? CELL_TYPE.O : CELL_TYPE.X;
             BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
         }
+    }
+
+    private void TwoHintSolve(int idx, string[] hintStr, CHECK_TYPE type)
+    {
+
     }
 
     private int[] MakeTempList(int len)
