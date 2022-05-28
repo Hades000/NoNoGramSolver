@@ -28,11 +28,17 @@ public class Solver : MonoBehaviour
                 }
                 else
                 {
-                    string[] hintArr = inputRowHint[i].Split(',');
+                    string[] rowhintArr = inputRowHint[i].Split(',');
+                    string[] colhintArr = inputColHint[i].Split(',');
 
-                    if(hintArr.Length == 2)
+                    if(rowhintArr.Length == 2)
                     {
-                        TwoHintSolve(i,hintArr, CHECK_TYPE.ROW);
+                        TwoHintSolve(i,rowhintArr, CHECK_TYPE.ROW);
+                    }
+
+                    if(colhintArr.Length == 2)
+                    {
+                        TwoHintSolve(i,rowhintArr, CHECK_TYPE.COL);
                     }
                 }
 
@@ -63,7 +69,7 @@ public class Solver : MonoBehaviour
 
         for(int i = 0; i < BoardManager.ins.boardSize; i++)
         {
-            CELL_TYPE changeType = sum[i] == loopCount ? CELL_TYPE.O : CELL_TYPE.X;
+            CELL_TYPE changeType = sum[i] == loopCount ? CELL_TYPE.O : CELL_TYPE.EMPTY;
             BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
         }
     }
@@ -73,26 +79,38 @@ public class Solver : MonoBehaviour
         int firstHint = int.Parse(hintStr[0]);
         int secHint = int.Parse(hintStr[1]);
         int loopCount = BoardManager.ins.boardSize - secHint - firstHint;
-
-
-        Debug.Log($"Loop Count : {loopCount}");
-        
+        int count = 0;
         int[] sum = new int[BoardManager.ins.boardSize];
 
         for(int i = 0; i < loopCount; i++)
         {
             for(int j = i + firstHint+1;j < BoardManager.ins.boardSize-secHint+1; j++)
             {
-                sum[i+j]++;
+                int[] temp = new int[BoardManager.ins.boardSize];
+                for(int k = i ; k< i+firstHint; k++)
+                {
+                    temp[k] = 1;
+                }
+
+                for (int k = j; k < j+secHint; k++)
+                {
+                    temp[k] = 1;
+                }
+
+                for(int k = 0 ; k< BoardManager.ins.boardSize; k++)
+                {
+                    sum[k] += temp[k];
+                }
+
+                count++;
             }
         }
 
-        Debug.Log("------------------------------------------");
-        for(int i=0; i< sum.Length;i++)
+        for(int i = 0; i < BoardManager.ins.boardSize; i++)
         {
-            Debug.Log(sum[i]);
+            CELL_TYPE changeType = sum[i] == count ? CELL_TYPE.O : CELL_TYPE.EMPTY;
+            BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
         }
-        Debug.Log("------------------------------------------");
     }
 
     private List<int> ChangeStringHint(string hint)
