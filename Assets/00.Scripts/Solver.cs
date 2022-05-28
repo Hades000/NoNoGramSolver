@@ -72,7 +72,30 @@ public class Solver : MonoBehaviour
 
     private void TwoHintSolve(int idx, string[] hintStr, CHECK_TYPE type)
     {
+        int firstHint = int.Parse(hintStr[0]);
+        int secHint = int.Parse(hintStr[1]);
+        int loopCount = BoardManager.ins.boardSize - secHint - firstHint;
 
+
+        Debug.Log($"Loop Count : {loopCount}");
+        
+        int[] sum = MakeTempList(BoardManager.ins.boardSize);
+
+        for(int i = 0; i < loopCount; i++)
+        {
+            for(int j = i + firstHint+1;j < BoardManager.ins.boardSize-secHint+1; j++)
+            {
+                int[] tmp =MakeTempList(BoardManager.ins.boardSize);
+                sum[i+j]++;
+            }
+        }
+
+        Debug.Log("------------------------------------------");
+        for(int i=0; i< sum.Length;i++)
+        {
+            Debug.Log(sum[i]);
+        }
+        Debug.Log("------------------------------------------");
     }
 
     private int[] MakeTempList(int len)
