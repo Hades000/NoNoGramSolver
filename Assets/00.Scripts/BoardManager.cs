@@ -75,13 +75,11 @@ public class BoardManager : MonoBehaviour
                 if (board[idx, row].type == CELL_TYPE.EMPTY)
                 {
                     rowCheck[idx] = false;
-                    Debug.Log("Empty Ä­ÀÌ ÀÖÀ½ false");
                     return;
                 }
             }
 
             rowCheck[idx] = true;
-            Debug.Log("Empty Ä­ÀÌ ¾øÀ½ true");
         }
         else
         {
@@ -90,12 +88,10 @@ public class BoardManager : MonoBehaviour
                 if (board[col, idx].type == CELL_TYPE.EMPTY)
                 {
                     colCheck[idx] = false;
-                    Debug.Log("Empty Ä­ÀÌ ÀÖÀ½ false");
                     return;
                 }
             }
             colCheck[idx] = true;
-            Debug.Log("Empty Ä­ÀÌ ¾øÀ½ true");
         }
     }
 

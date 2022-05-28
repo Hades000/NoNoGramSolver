@@ -17,14 +17,14 @@ public class Solver : MonoBehaviour
     private IEnumerator Solve()
     {
         yield return new WaitUntil(() => BoardManager.ins.isSettingCom);
-        while (true)
-        {
+        // while (true)
+        // {
             for (int i = 0; i < BoardManager.ins.boardSize; i++)
             {
                 if(!inputRowHint[i].Contains(","))
                 {
                     OneHintSolve(i, inputRowHint[i], CHECK_TYPE.ROW);
-                    OneHintSolve(i, inputColHint[i], CHECK_TYPE.COL);
+                    // OneHintSolve(i, inputColHint[i], CHECK_TYPE.COL);
                 }
 
                 BoardManager.ins.CheckBoardState(i, CHECK_TYPE.ROW);
@@ -33,8 +33,8 @@ public class Solver : MonoBehaviour
 
             BoardManager.ins.ShowMap();
 
-            yield return new WaitForSecondsRealtime(1f);
-        }
+            // yield return new WaitForSecondsRealtime(1f);
+        // }
     }
 
     private void OneHintSolve(int idx, string hintStr, CHECK_TYPE type)
@@ -43,7 +43,9 @@ public class Solver : MonoBehaviour
         int[] sum = new int[BoardManager.ins.boardSize];
 
         int hint = int.Parse(hintStr);
-        int loopCount = BoardManager.ins.boardSize - hint - 1;
+        int loopCount = BoardManager.ins.boardSize - hint + 1;
+
+        Debug.Log($"Loop Count : {loopCount}");
 
         for(int i = 0 ; i<loopCount; i++)
         {
@@ -55,9 +57,10 @@ public class Solver : MonoBehaviour
             }
         }
 
-        for(int i = 0; i < sum.Length;i++)
+        for(int i = 0; i < BoardManager.ins.boardSize; i++)
         {
-            Debug.Log(sum[i]);
+            CELL_TYPE changeType = sum[i] == loopCount ? CELL_TYPE.O : CELL_TYPE.X;
+            BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
         }
     }
 
