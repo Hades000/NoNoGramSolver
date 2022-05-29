@@ -108,9 +108,81 @@ public class Solver : MonoBehaviour
         }
     }
 
-    private void MultiHintSolve(int idx, string[] hintStr, CHECK_TYPE type)
+    private void MultiHintSolve(int idx, string hintStr, CHECK_TYPE type)
     {
+        int len = BoardManager.ins.boardSize;
         
+        string[] spltHint = hintStr.Split(',');
+        int[] intHintArr = new int[spltHint.Length];
+        int[] tmpArr = new int[len];
+        int[] sum = new int[len];
+        int count = 0;
+
+        for(int i = 0 ; i < spltHint.Length;i++)
+        {
+            intHintArr[i] = int.Parse(spltHint[i]);
+        }
+
+        for(int n =0; n < Mathf.Pow(2,len); n++)
+        {
+            List<int> dummy = new List<int>();
+            List<int> answer = new List<int>();
+            
+            int tmpSum = 0;
+            int tmpArrSum = 0;
+
+            dummy.Add(0);
+            for(int i = 0 ; i<tmpArr.Length; i++)
+            {
+                dummy.Add(tmpArr[i]);
+                tmpArrSum += tmpArr[i];
+            }
+            dummy.Add(0);
+
+            if(tmpArrSum == 0)
+            {
+                answer.Add(0);
+            }
+
+            for(int i = 1 ; i<dummy.Count; i++)
+            {
+                tmpSum += dummy[i];
+
+                if(dummy[i] == 1 && dummy[i+1] == 0)
+                {
+                    answer.Add(tmpSum);
+                    tmpSum = 0;
+                }
+            }
+
+            if(answer.ToArray() == intHintArr)
+            {
+                for(int i = 0 ; i <len; i++)
+                {
+                    sum[i] += tmpArr[i];
+                }
+
+                count++;
+            }
+
+            dummy[0] += 1;
+
+            for(int i = 0 ; i < len-1; i++)
+            {
+                if(tmpArr[i] == 2)
+                {
+                    tmpArr[i] =0;
+                    tmpArr[i+1] +=1;
+                }
+            }
+        }
+
+        Debug.Log(ShowTestArray("Multi Arr", sum));
+        for(int i = 0; i < BoardManager.ins.boardSize; i++)
+        {
+            CELL_TYPE changeType = sum[i] == count ? CELL_TYPE.O : CELL_TYPE.EMPTY;
+            BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
+        }
     }
 
     private List<int> ChangeStringHint(string hint)
@@ -132,6 +204,18 @@ public class Solver : MonoBehaviour
         string tmp = "";
 
         for(int i = 0; i< arr.Length;i++)
+        {
+            tmp += arr[i].ToString() +" ";
+        }
+
+        return title + " : " + tmp;
+    }
+
+    private string ShowTestArray(string title, List<int> arr)
+    {
+        string tmp = "";
+
+        for(int i = 0; i< arr.Count;i++)
         {
             tmp += arr[i].ToString() +" ";
         }
