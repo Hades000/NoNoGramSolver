@@ -98,11 +98,19 @@ public class Solver : MonoBehaviour
             }
         }
 
+        Debug.Log("Count : " + count);
+        Debug.Log(ShowTestArray("SUM ARRAY",sum));
+
         for(int i = 0; i < BoardManager.ins.boardSize; i++)
         {
             CELL_TYPE changeType = sum[i] == count ? CELL_TYPE.O : CELL_TYPE.EMPTY;
             BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
         }
+    }
+
+    private void MultiHintSolve(int idx, string[] hintStr, CHECK_TYPE type)
+    {
+        
     }
 
     private List<int> ChangeStringHint(string hint)
@@ -117,5 +125,17 @@ public class Solver : MonoBehaviour
         }
 
         return tmp;
+    }
+
+    private string ShowTestArray(string title, int[] arr)
+    {
+        string tmp = "";
+
+        for(int i = 0; i< arr.Length;i++)
+        {
+            tmp += arr[i].ToString() +" ";
+        }
+
+        return title + " : " + tmp;
     }
 }
