@@ -17,134 +17,51 @@ public class Solver : MonoBehaviour
     private IEnumerator Solve()
     {
         yield return new WaitUntil(() => BoardManager.ins.isSettingCom);
-        // while (true)
-        // {
-            for (int i = 0; i < BoardManager.ins.boardSize; i++)
-            {
-                if(!inputRowHint[i].Contains(","))
-                {
-                    OneHintSolve(i, inputRowHint[i], CHECK_TYPE.ROW);
-                }
-                else
-                {
-                    string[] rowhintArr = inputRowHint[i].Split(',');
-
-                    if(rowhintArr.Length == 2)
-                    {
-                        TwoHintSolve(i,rowhintArr, CHECK_TYPE.ROW);
-                    }
-                }
-
-                BoardManager.ins.CheckBoardState(i, CHECK_TYPE.ROW);
-            }
-
-            BoardManager.ins.ShowMap();
-
-            // yield return new WaitForSecondsRealtime(1f);
-        // }
-    }
-
-    private void OneHintSolve(int idx, string hintStr, CHECK_TYPE type)
-    {
-        int[] sum = new int[BoardManager.ins.boardSize];
-
-        int hint = int.Parse(hintStr);
-        int loopCount = BoardManager.ins.boardSize - hint + 1;
-
-        for(int i = 0 ; i<loopCount; i++)
+        for (int i = 0; i < BoardManager.ins.boardSize; i++)
         {
-            for(int j = 0; j<hint; j++)
-            {
-                sum[i+j]++;
-            }
+            MultiHintSolve(i, inputRowHint[i], CHECK_TYPE.ROW);
+            BoardManager.ins.CheckBoardState(i, CHECK_TYPE.ROW);
         }
 
-        for(int i = 0; i < BoardManager.ins.boardSize; i++)
-        {
-            CELL_TYPE changeType = sum[i] == loopCount ? CELL_TYPE.O : CELL_TYPE.EMPTY;
-            BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
-        }
-    }
-
-    private void TwoHintSolve(int idx, string[] hintStr, CHECK_TYPE type)
-    {
-        int firstHint = int.Parse(hintStr[0]);
-        int secHint = int.Parse(hintStr[1]);
-        int loopCount = BoardManager.ins.boardSize - secHint - firstHint;
-        int count = 0;
-        int[] sum = new int[BoardManager.ins.boardSize];
-
-        for(int i = 0; i < loopCount; i++)
-        {
-            for(int j = i + firstHint+1;j < BoardManager.ins.boardSize-secHint+1; j++)
-            {
-                int[] temp = new int[BoardManager.ins.boardSize];
-                for(int k = i ; k< i+firstHint; k++)
-                {
-                    temp[k] = 1;
-                }
-
-                for (int k = j; k < j+secHint; k++)
-                {
-                    temp[k] = 1;
-                }
-
-                for(int k = 0 ; k< BoardManager.ins.boardSize; k++)
-                {
-                    sum[k] += temp[k];
-                }
-
-                count++;
-            }
-        }
-
-        Debug.Log("Count : " + count);
-        Debug.Log(ShowTestArray("SUM ARRAY",sum));
-
-        for(int i = 0; i < BoardManager.ins.boardSize; i++)
-        {
-            CELL_TYPE changeType = sum[i] == count ? CELL_TYPE.O : CELL_TYPE.EMPTY;
-            BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
-        }
+        BoardManager.ins.ShowMap();
     }
 
     private void MultiHintSolve(int idx, string hintStr, CHECK_TYPE type)
     {
         int len = BoardManager.ins.boardSize;
         
+        List<int> intHintArr = new List<int>();
         string[] spltHint = hintStr.Split(',');
-        int[] intHintArr = new int[spltHint.Length];
+
         int[] tmpArr = new int[len];
         int[] sum = new int[len];
         int count = 0;
 
         for(int i = 0 ; i < spltHint.Length;i++)
         {
-            intHintArr[i] = int.Parse(spltHint[i]);
+            intHintArr.Add(int.Parse(spltHint[i])); 
         }
+
 
         for(int n =0; n < Mathf.Pow(2,len); n++)
         {
-            List<int> dummy = new List<int>();
+            Debug.Log("--------------------------------------");
+            int[] dummy = new int[len+2];
             List<int> answer = new List<int>();
             
             int tmpSum = 0;
-            int tmpArrSum = 0;
 
-            dummy.Add(0);
+            dummy[0] = 0;
+
             for(int i = 0 ; i<tmpArr.Length; i++)
             {
-                dummy.Add(tmpArr[i]);
-                tmpArrSum += tmpArr[i];
+                dummy[i+1] = tmpArr[i];
             }
-            dummy.Add(0);
+            dummy[len+1]=0;
 
-            if(tmpArrSum == 0)
-            {
-                answer.Add(0);
-            }
-
-            for(int i = 1 ; i<dummy.Count; i++)
+            ShowTestArray("Dummy Arr : ", dummy);
+   
+            for(int i = 1 ; i<dummy.Length; i++)
             {
                 tmpSum += dummy[i];
 
@@ -155,8 +72,12 @@ public class Solver : MonoBehaviour
                 }
             }
 
-            if(answer.ToArray() == intHintArr)
+            ShowTestArray("intHintArr : ", intHintArr);
+            ShowTestArray("answer : ",answer);
+            Debug.Log("answer == intHintArr : " + (answer == intHintArr));
+            if(CompareList(answer,intHintArr))
             {
+                Debug.Log("Same!!!!");
                 for(int i = 0 ; i <len; i++)
                 {
                     sum[i] += tmpArr[i];
@@ -165,7 +86,7 @@ public class Solver : MonoBehaviour
                 count++;
             }
 
-            dummy[0] += 1;
+            tmpArr[0] += 1;
 
             for(int i = 0 ; i < len-1; i++)
             {
@@ -177,29 +98,31 @@ public class Solver : MonoBehaviour
             }
         }
 
-        Debug.Log(ShowTestArray("Multi Arr", sum));
+        Debug.Log("Count : " + count);
+        ShowTestArray("Multi Arr", sum);
+
         for(int i = 0; i < BoardManager.ins.boardSize; i++)
         {
             CELL_TYPE changeType = sum[i] == count ? CELL_TYPE.O : CELL_TYPE.EMPTY;
             BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
         }
     }
-
-    private List<int> ChangeStringHint(string hint)
+    private bool CompareList(List<int>a, List<int>b)
     {
-        List<int> tmp = new List<int>();
-
-        string[] tmpStr = hint.Split(',');
-
-        for (int i = 0; i < tmpStr.Length; i++)
+        if(a.Count != b.Count)
+            return false;
+        else
         {
-            tmp.Add(int.Parse(tmpStr[i]));
+            for(int i = 0 ; i<a.Count; i++)
+            {
+                if(a[i] != b[i])
+                    return false;
+            }
+
+            return true;
         }
-
-        return tmp;
     }
-
-    private string ShowTestArray(string title, int[] arr)
+    private void ShowTestArray(string title, int[] arr)
     {
         string tmp = "";
 
@@ -208,10 +131,9 @@ public class Solver : MonoBehaviour
             tmp += arr[i].ToString() +" ";
         }
 
-        return title + " : " + tmp;
+        Debug.Log(title + " : " + tmp);
     }
-
-    private string ShowTestArray(string title, List<int> arr)
+    private void ShowTestArray(string title, List<int> arr)
     {
         string tmp = "";
 
@@ -220,6 +142,6 @@ public class Solver : MonoBehaviour
             tmp += arr[i].ToString() +" ";
         }
 
-        return title + " : " + tmp;
+        Debug.Log(title + " : " + tmp);
     }
 }
