@@ -65,9 +65,6 @@ public class BoardManager : MonoBehaviour
 
     public void CheckBoardState(int idx, CHECK_TYPE type)
     {
-        if (!CanWork(idx, type))
-            return;
-
         if (type == CHECK_TYPE.ROW)
         {
             for (int row = 0; row < boardSize; row++)
@@ -123,10 +120,5 @@ public class BoardManager : MonoBehaviour
         {
             board[curIdx, fixedIdx].type = cellType;
         }
-    }
-
-    public bool CanWork(int idx, CHECK_TYPE type)
-    {
-        return (type == CHECK_TYPE.ROW && !BoardManager.ins.rowCheck[idx] || type == CHECK_TYPE.COL && !BoardManager.ins.colCheck[idx]);
     }
 }
