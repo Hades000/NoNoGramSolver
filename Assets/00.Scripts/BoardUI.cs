@@ -9,6 +9,8 @@ public class BoardUI : MonoBehaviour
     public Transform rowParent;
     public Transform colParent;
 
+    public Solver solver;
+
     private void Start()
     {
         GenerateHintText();
@@ -34,5 +36,8 @@ public class BoardUI : MonoBehaviour
             newColHint.transform.localPosition = new Vector3( i * textSize, 590,0);
             newColHint.rectTransform.sizeDelta = new Vector3(textSize,550,0);
         }
+    }
+    private void SetHintText()
+    {
     }
 }
