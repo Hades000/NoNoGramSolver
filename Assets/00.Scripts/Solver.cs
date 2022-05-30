@@ -45,7 +45,6 @@ public class Solver : MonoBehaviour
 
         for(int n =0; n < Mathf.Pow(2,len); n++)
         {
-            Debug.Log("--------------------------------------");
             int[] dummy = new int[len+2];
             List<int> answer = new List<int>();
             
@@ -58,8 +57,6 @@ public class Solver : MonoBehaviour
                 dummy[i+1] = tmpArr[i];
             }
             dummy[len+1]=0;
-
-            ShowTestArray("Dummy Arr : ", dummy);
    
             for(int i = 1 ; i<dummy.Length; i++)
             {
@@ -72,12 +69,8 @@ public class Solver : MonoBehaviour
                 }
             }
 
-            ShowTestArray("intHintArr : ", intHintArr);
-            ShowTestArray("answer : ",answer);
-            Debug.Log("answer == intHintArr : " + (answer == intHintArr));
             if(CompareList(answer,intHintArr))
             {
-                Debug.Log("Same!!!!");
                 for(int i = 0 ; i <len; i++)
                 {
                     sum[i] += tmpArr[i];
@@ -97,9 +90,6 @@ public class Solver : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("Count : " + count);
-        ShowTestArray("Multi Arr", sum);
 
         for(int i = 0; i < BoardManager.ins.boardSize; i++)
         {
