@@ -16,12 +16,21 @@ public class Solver : MonoBehaviour
 
     private IEnumerator Solve()
     {
+        int len = BoardManager.ins.boardSize;
         yield return new WaitUntil(() => BoardManager.ins.isSettingCom);
-        for (int i = 0; i < BoardManager.ins.boardSize; i++)
+
+        for(int n = 0 ; n <len ; n++)
         {
-            MultiHintSolve(i, inputRowHint[i], CHECK_TYPE.ROW);
-            BoardManager.ins.CheckBoardState(i, CHECK_TYPE.ROW);
+            for (int i = 0; i < len; i++)
+            {
+                MultiHintSolve(i, inputRowHint[i], CHECK_TYPE.ROW); 
+            }
+            for (int i = 0; i < len; i++)
+            {
+                MultiHintSolve(i, inputColHint[i], CHECK_TYPE.COL);
+            }
         }
+
 
         BoardManager.ins.ShowMap();
     }
@@ -29,8 +38,8 @@ public class Solver : MonoBehaviour
     private void MultiHintSolve(int idx, string hintStr, CHECK_TYPE type)
     {
         int len = BoardManager.ins.boardSize;
-        
-        Cell[] boardCellDatas = BoardManager.ins.GetBoardCell(idx,type);
+
+        int[] boardCellDatas = BoardManager.ins.GetBoardCell(idx,type);
         List<int> intHintArr = new List<int>();
         string[] spltHint = hintStr.Split(',');
 
@@ -42,7 +51,6 @@ public class Solver : MonoBehaviour
         {
             intHintArr.Add(int.Parse(spltHint[i])); 
         }
-
 
         for(int n =0; n < Mathf.Pow(2,len); n++)
         {
@@ -79,19 +87,20 @@ public class Solver : MonoBehaviour
 
                 for(int i = 0; i< len; i++)
                 {
-                    if(boardCellDatas[i].type == CELL_TYPE.O)
+                    if(boardCellDatas[i] == 1)
                     {
                         okArr.Add(i);
                     }
-                    else if(boardCellDatas[i].type == CELL_TYPE.X)
+                    else if(boardCellDatas[i] ==-1)
                     {
                         banArr.Add(i);
                     }
                 }
 
+
                 for(int i =0; i<okArr.Count;i++)
                 {
-                    if(tmpArr[i] != 1)
+                    if(tmpArr[okArr[i]] != 1)
                     {
                         okSwitch = 0;
                     }
@@ -99,7 +108,7 @@ public class Solver : MonoBehaviour
 
                 for(int i =0; i<banArr.Count;i++)
                 {
-                    if(tmpArr[i] != 1)
+                    if(tmpArr[banArr[i]] != 0)
                     {
                         banSwitch = 0;
                     }
@@ -130,13 +139,13 @@ public class Solver : MonoBehaviour
 
         for(int i = 0; i < BoardManager.ins.boardSize; i++)
         {
-            CELL_TYPE changeType;
+            int changeType = 0;
+
             if(sum[i] == count)
-                changeType = CELL_TYPE.O;
+                changeType = 1;
             else if(sum[i] == 0)
-                changeType = CELL_TYPE.X;
-            else
-                changeType = CELL_TYPE.EMPTY;
+                changeType =-1;
+
             BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
         }
     }
@@ -154,27 +163,5 @@ public class Solver : MonoBehaviour
 
             return true;
         }
-    }
-    private void ShowTestArray(string title, int[] arr)
-    {
-        string tmp = "";
-
-        for(int i = 0; i< arr.Length;i++)
-        {
-            tmp += arr[i].ToString() +" ";
-        }
-
-        Debug.Log(title + " : " + tmp);
-    }
-    private void ShowTestArray(string title, List<int> arr)
-    {
-        string tmp = "";
-
-        for(int i = 0; i< arr.Count;i++)
-        {
-            tmp += arr[i].ToString() +" ";
-        }
-
-        Debug.Log(title + " : " + tmp);
     }
 }

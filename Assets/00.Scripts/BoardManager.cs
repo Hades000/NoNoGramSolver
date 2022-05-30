@@ -63,86 +63,40 @@ public class BoardManager : MonoBehaviour
         }
     }
 
-    public void CheckBoardState(int idx, CHECK_TYPE type)
+    public int[] GetBoardCell(int fixedIdx, CHECK_TYPE type)
     {
-        if (type == CHECK_TYPE.ROW)
-        {
-            for (int row = 0; row < boardSize; row++)
-            {
-                if (board[idx, row].type == CELL_TYPE.EMPTY)
-                {
-                    rowCheck[idx] = false;
-                    return;
-                }
-            }
-
-            rowCheck[idx] = true;
-        }
-        else
-        {
-            for (int col = 0; col < boardSize; col++)
-            {
-                if (board[col, idx].type == CELL_TYPE.EMPTY)
-                {
-                    colCheck[idx] = false;
-                    return;
-                }
-            }
-            colCheck[idx] = true;
-        }
-    }
-
-    public Cell[] GetBoardCell(int fixedIdx, CHECK_TYPE type)
-    {
-        Cell[] tmp = new Cell[boardSize];
+        int[] tmp = new int[boardSize];
+        string tmpResult = "";
 
         if(type == CHECK_TYPE.ROW)
         {
             for(int i = 0 ; i < boardSize; i++)
             {
-                tmp[i] = BoardManager.ins.board[fixedIdx,i];
+                tmp[i] = BoardManager.ins.board[fixedIdx,i].state;
+                tmpResult += (int)tmp[i] + " ";
             }
-
             return tmp;
         }
         else
         {
             for(int i = 0 ; i < boardSize; i++)
             {
-                tmp[i] = BoardManager.ins.board[i,fixedIdx];
+                tmp[i] = BoardManager.ins.board[i,fixedIdx].state;
+                tmpResult += (int)tmp[i] + " ";
             }
-
             return tmp;
         }
     }
 
-    public void ChangeBoardData(int fixedIdx, CELL_TYPE cellType, CHECK_TYPE checkType)
+    public void ChangeBoardData(int fixedIdx, int curIdx, int cellType, CHECK_TYPE checkType)
     {
         if (checkType == CHECK_TYPE.ROW)
         {
-            for (int row = 0; row < boardSize; row++)
-            {
-                board[fixedIdx, row].type = cellType;
-            }
+            board[fixedIdx, curIdx].state = cellType;
         }
         else
         {
-            for (int col = 0; col < boardSize; col++)
-            {
-                board[col, fixedIdx].type = cellType;
-            }
-        }
-    }
-
-    public void ChangeBoardData(int fixedIdx, int curIdx, CELL_TYPE cellType, CHECK_TYPE checkType)
-    {
-        if (checkType == CHECK_TYPE.ROW)
-        {
-            board[fixedIdx, curIdx].type = cellType;
-        }
-        else
-        {
-            board[curIdx, fixedIdx].type = cellType;
+            board[curIdx, fixedIdx].state = cellType;
         }
     }
 }
