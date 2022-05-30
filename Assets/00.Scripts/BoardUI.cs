@@ -50,7 +50,7 @@ public class BoardUI : MonoBehaviour
         for(int i = 0; i < len; i++)
         {
             rowHintTxt[i].text = solver.inputRowHint[i];
-            colHintTxt[i].text = solver.inputColHint[i];
+            colHintTxt[i].text = solver.inputColHint[i].Replace(',','\n');
         }
     }
 }
