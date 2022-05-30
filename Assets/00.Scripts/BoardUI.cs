@@ -11,15 +11,7 @@ public class BoardUI : MonoBehaviour
 
     }
 
-    private void GenerateHint(CHECK_TYPE type)
+    private void GenerateHintText()
     {
-        if(type == CHECK_TYPE.ROW)
-        {
-
-        }
-        else
-        {
-
-        }
     }
 }
