@@ -30,6 +30,7 @@ public class Solver : MonoBehaviour
     {
         int len = BoardManager.ins.boardSize;
         
+        Cell[] boardCellDatas = BoardManager.ins.GetBoardCell(idx,type);
         List<int> intHintArr = new List<int>();
         string[] spltHint = hintStr.Split(',');
 
@@ -71,12 +72,48 @@ public class Solver : MonoBehaviour
 
             if(CompareList(answer,intHintArr))
             {
-                for(int i = 0 ; i <len; i++)
+                List<int> okArr = new List<int>();
+                List<int> banArr = new List<int>();
+                int okSwitch = 1;
+                int banSwitch = 1;
+
+                for(int i = 0; i< len; i++)
                 {
-                    sum[i] += tmpArr[i];
+                    if(boardCellDatas[i].type == CELL_TYPE.O)
+                    {
+                        okArr.Add(i);
+                    }
+                    else if(boardCellDatas[i].type == CELL_TYPE.X)
+                    {
+                        banArr.Add(i);
+                    }
                 }
 
-                count++;
+                for(int i =0; i<okArr.Count;i++)
+                {
+                    if(tmpArr[i] != 1)
+                    {
+                        okSwitch = 0;
+                    }
+                }
+
+                for(int i =0; i<banArr.Count;i++)
+                {
+                    if(tmpArr[i] != 1)
+                    {
+                        banSwitch = 0;
+                    }
+                }
+
+                if(okSwitch * banSwitch == 1)
+                {
+                    for(int i = 0 ; i <len; i++)
+                    {
+                        sum[i] += tmpArr[i];
+                    }
+
+                    count++;
+                }
             }
 
             tmpArr[0] += 1;
@@ -93,7 +130,13 @@ public class Solver : MonoBehaviour
 
         for(int i = 0; i < BoardManager.ins.boardSize; i++)
         {
-            CELL_TYPE changeType = sum[i] == count ? CELL_TYPE.O : CELL_TYPE.EMPTY;
+            CELL_TYPE changeType;
+            if(sum[i] == count)
+                changeType = CELL_TYPE.O;
+            else if(sum[i] == 0)
+                changeType = CELL_TYPE.X;
+            else
+                changeType = CELL_TYPE.EMPTY;
             BoardManager.ins.ChangeBoardData(idx,i,changeType,type);
         }
     }

@@ -92,6 +92,30 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    public Cell[] GetBoardCell(int fixedIdx, CHECK_TYPE type)
+    {
+        Cell[] tmp = new Cell[boardSize];
+
+        if(type == CHECK_TYPE.ROW)
+        {
+            for(int i = 0 ; i < boardSize; i++)
+            {
+                tmp[i] = BoardManager.ins.board[fixedIdx,i];
+            }
+
+            return tmp;
+        }
+        else
+        {
+            for(int i = 0 ; i < boardSize; i++)
+            {
+                tmp[i] = BoardManager.ins.board[i,fixedIdx];
+            }
+
+            return tmp;
+        }
+    }
+
     public void ChangeBoardData(int fixedIdx, CELL_TYPE cellType, CHECK_TYPE checkType)
     {
         if (checkType == CHECK_TYPE.ROW)
