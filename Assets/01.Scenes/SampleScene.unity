@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &11182752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11182754}
+  - component: {fileID: 11182753}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &11182753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11182752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c592c35567e434fa56a613bad0ea2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadFileName: Heart1515
+  loadData: []
+--- !u!4 &11182754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11182752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &360257311
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,38 +461,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fb63744e7e5124f8ce88c220d4cacf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputRowHint:
-  - 2,2
-  - 7
-  - 8
-  - 4,4
-  - 1,1,2,4
-  - 1,1,9
-  - 2,10
-  - 2,9
-  - 2,2,8
-  - 14
-  - 13
-  - 13
-  - 13
-  - 8,3
-  - 4,3,2
-  inputColHint:
-  - 7
-  - 7
-  - 6
-  - 2,7
-  - 1,1,7
-  - 2,3,6
-  - 13
-  - 15
-  - 3,10
-  - 2,10
-  - 13
-  - 13
-  - 13
-  - 7,4
-  - 2
+  inputRowHint: []
+  inputColHint: []
 --- !u!1 &1446713012
 GameObject:
   m_ObjectHideFlags: 0

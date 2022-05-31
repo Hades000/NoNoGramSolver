@@ -17,6 +17,10 @@ public class Solver : MonoBehaviour
     private IEnumerator Solve()
     {
         int len = BoardManager.ins.boardSize;
+        inputRowHint = new string[len];
+        inputColHint = new string[len];
+        SetHintData();
+
         yield return new WaitUntil(() => BoardManager.ins.isSettingCom);
         
 
@@ -34,6 +38,27 @@ public class Solver : MonoBehaviour
 
 
         BoardManager.ins.ShowMap();
+    }
+
+    private void SetHintData()
+    {
+        Debug.Log("SetHingData Start");
+
+        Debug.Log(DataManager.ins.loadData);
+
+        int rowStart = 1;
+        int colStart = BoardManager.ins.boardSize + 2;
+        for(int i = 0 ; i< inputRowHint.Length; i++)
+        {
+            inputRowHint[i] = DataManager.ins.loadData[rowStart+i]; 
+
+            Debug.Log(DataManager.ins.loadData[rowStart+i]);
+        }
+        for(int i = 0 ; i< inputColHint.Length; i++)
+        {
+            inputColHint[i] = DataManager.ins.loadData[colStart+i]; 
+            Debug.Log(DataManager.ins.loadData[colStart+i]);
+        }
     }
 
     private void MultiHintSolve(int idx, string hintStr, CHECK_TYPE type)
