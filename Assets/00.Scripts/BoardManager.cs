@@ -24,12 +24,10 @@ public class BoardManager : MonoBehaviour
     void Start()
     {
         board = new Cell[boardSize, boardSize];
-        rowCheck = new bool[boardSize];
-        colCheck = new bool[boardSize];
-        InitBoard();
+        GenerateBoard();
     }
 
-    private void InitBoard()
+    private void GenerateBoard()
     {
         int width = 600 / boardSize;
         int height = 600 / boardSize;
@@ -41,12 +39,6 @@ public class BoardManager : MonoBehaviour
                 board[y, x] = Instantiate(cellPrefabs);
                 board[y, x].SetCell(cellParent, width, height, x, y);
             }
-        }
-
-        for (int i = 0; i < boardSize; i++)
-        {
-            rowCheck[i] = false;
-            colCheck[i] = false;
         }
 
         isSettingCom = true;
