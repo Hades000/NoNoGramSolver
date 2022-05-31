@@ -23,6 +23,7 @@ public class BoardManager : MonoBehaviour
 
     void Start()
     {
+        boardSize = int.Parse(DataManager.ins.loadData[0]);
         board = new Cell[boardSize, boardSize];
         GenerateBoard();
     }

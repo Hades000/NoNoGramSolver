@@ -18,6 +18,7 @@ public class Solver : MonoBehaviour
     {
         int len = BoardManager.ins.boardSize;
         yield return new WaitUntil(() => BoardManager.ins.isSettingCom);
+        
 
         for(int n = 0 ; n <len ; n++)
         {
